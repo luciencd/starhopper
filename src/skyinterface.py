@@ -5,12 +5,16 @@ import os
 import requests
 import json
 import time
+import numpy as np
+import matplotlib.pyplot as plt
+from astropy.visualization import astropy_mpl_style
 
 class Astronomer:
     #astropy.coordinates.AltAz()
     def __init__(self,latitude,longitude):
         self.latitude = latitude
         self.longitude = longitude
+        self.location = EarthLocation.from_geodetic(latitude,longitude,20)
 
     def getTime(self):
         return time
@@ -19,19 +23,24 @@ class Astronomer:
         ##Perhaps get name to astropyname database going in dynamoDB in AWS?
         ##for now, astropy should be good enough for most objects.
         ##Should accept Messier designation, NGC, and proper noun name. #perhaps interface with a
-        return astroobject#returns the astropy object.
 
-    def getRADEC(self,obj,time=time.time()):
+        return SkyCoord.from_name(name)#returns the astropy object.
 
-        return RADEC#Ra Dec astropy object.
+    def getRADEC(self,obj,t=0):
+        t = time.time()
+        obj = getObject(name)
+        return obj#Ra Dec astropy object.
 
-    def getAltAz(self,obj,time=time.time()):
-        return ALTAZ#altaz astropy object
+    def getAltAz(self,name,t=0):
+        t = time.time()
+        obj = getObject(name)
+        return obj.transform_to(AltAz(obstime=t,location=self.location))#altaz astropy object
 
-    def getClosestParallel(self,obj,time=time.time()):
+    def getClosestParallel(self,obj,t=0):
+        t = time.time()
         return astrobject
 
-    def getRandomParallel(self,time=time.time()):
+    def getRandomParallel(self,t=0):
         return (astrobject1,astrobject2)##A bright star and a
 
 
@@ -113,14 +122,14 @@ class User:
     #weather classes
     #def getCloudCover():
         #
-    def getCloudCover():
+    def getCloudCover(self):
         return self.clear_dark_sky.getCloudCover()
 
-    def getRADEC(name):
+    def getRADEC(self,name):
         return "nostar1"
 
-    def getAltAz(name):
-        return "nostar2"
+    def getAltAz(self,name):
+        return self.astronomer.getAltAz(name)
 
 
 
