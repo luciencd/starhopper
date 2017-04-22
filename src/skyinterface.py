@@ -35,7 +35,12 @@ class ClearDarkSky:
     def __init__(self,location):
         self.location = location
         self.api_key = os.getenv("DARK_SKY_API_KEY",'')
+        self.url = "https://api.darksky.net/forecast/"
+    /37.8267,-122.4233
+    def getJSON():
+        url = self.url+self.api_key+"/"+self.location.latitude()+","+self.location.longitude()
 
+        
 
     def getCloudCover():
 
