@@ -25,7 +25,7 @@ class Astronomer:
         return (astrobject1,astrobject2)##A bright star and a
 
 
-
+import os
 ##cleardarksky class.
 ##No inheritance, because we need to get things done fast.
 ##has a reference to a user, because we need latitude and longitude.
@@ -34,6 +34,7 @@ class ClearDarkSky:
 
     def __init__(self,location):
         self.location = location
+        self.api_key = os.getenv("DARK_SKY_API_KEY",'')
 
 
     def getCloudCover():
