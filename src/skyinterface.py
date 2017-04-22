@@ -4,6 +4,7 @@ from astropy.coordinates import EarthLocation
 import os
 import requests
 import json
+import time
 
 class Astronomer:
     #astropy.coordinates.AltAz()
@@ -18,19 +19,19 @@ class Astronomer:
         ##Perhaps get name to astropyname database going in dynamoDB in AWS?
         ##for now, astropy should be good enough for most objects.
         ##Should accept Messier designation, NGC, and proper noun name. #perhaps interface with a
-        return string#returns the astropy object.
+        return astroobject#returns the astropy object.
 
-    def getRADEC(self,obj):
+    def getRADEC(self,obj,time=time.time()):
 
         return RADEC#Ra Dec astropy object.
 
-    def getAltAz(self,obj):
+    def getAltAz(self,obj,time=time.time()):
         return ALTAZ#altaz astropy object
 
-    def getClosestParallel(self,obj):
+    def getClosestParallel(self,obj,time=time.time()):
         return astrobject
 
-    def getRandomParallel(self):
+    def getRandomParallel(self,time=time.time()):
         return (astrobject1,astrobject2)##A bright star and a
 
 
@@ -120,6 +121,9 @@ class User:
 
     def getAltAz(name):
         return "nostar2"
+
+
+
     #...
     #wrapper classes for astronomer
     ##
