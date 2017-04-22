@@ -13,7 +13,12 @@ class TestStringMethods(unittest.TestCase):
         pass
 
     def test_location_of_m33(self):
-        m33location =  "1 33 50, +30 39 37"
+        m33location =  "1 33 50 +30 39 37"
+        self.assertEqual(self.user.getRADEC('M33'),m33location)
+
+    def test_location_of_NGC_(self):
+
+        m33location =  "17 58 33.423 66 37 59.52"
         self.assertEqual(self.user.getRADEC('M33'),m33location)
 
     def test_location_of_jupiter_today(self):
@@ -22,7 +27,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(self.user.getRADEC('jupiter',time.time(1492894680.65)),jupiterlocationtoday)
 
     def test_altaz_of_north_star(self):
-        northstarlocationatmidnight = "00 00 00 00 00 00"
+        northstarlocationatmidnight = "00 00 00, 00 00 00"
         self.assertEqual(self.user.getAltAz('north star',time.time("April 23rd 2017, 00:00:00")))
 
 
