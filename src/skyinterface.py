@@ -21,6 +21,7 @@ class Astronomer:
         return string#returns the astropy object.
 
     def getRADEC(self,obj):
+
         return RADEC#Ra Dec astropy object.
 
     def getAltAz(self,obj):
@@ -111,7 +112,14 @@ class User:
     #weather classes
     #def getCloudCover():
         #
+    def getCloudCover():
+        return self.clear_dark_sky.getCloudCover()
 
+    def getRADEC(name):
+        return "nostar1"
+
+    def getAltAz(name):
+        return "nostar2"
     #...
     #wrapper classes for astronomer
     ##
