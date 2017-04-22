@@ -42,45 +42,54 @@ class ClearDarkSky:
         self.location = location
         self.api_key = os.getenv("DARK_SKY_API_KEY",'')
         self.url = "https://api.darksky.net/forecast/"
-
-        self.cachedJSON = ""
+        self.cachedJSON = ""#not necessary until we need to reduce processing time, or api calls.
 
     def getJSON(self):
         url = self.url+self.api_key+"/"+self.location.latitude()+","+self.location.longitude()
         r = requests.get(url)
         print r
 
-
     def getCloudCover():
         ##caching attempt, but now ignore this.
         json = getJSON()
-        data = json["hourly"]["data"]
+        data = json["currently"]["data"]
         cloud_cover = data["cloudCover"]
         return cloud_cover
 
     def getTransparency():
         json = getJSON()
-        data = json["hourly"]["data"]
+        data = json["currently"]["data"]
         transparency = data["transparency"]
         return transparency
 
-    def getSeeing():
-        pass
+    def getVisibility():
+        json = getJSON()
+        data = json["currently"]["data"]
+        visibility = data["visibility"]
+        return visibility
 
     def getDarkness():
+        ##
         pass
 
     def getWind():
-        pass
+        json = getJSON()
+        data = json["currently"]["data"]
+        wind_speed = data["windSpeed"]
+        return wind_speed
 
     def getHumidity():
-        pass
+        json = getJSON()
+        data = json["currently"]["data"]
+        humidity = data["humidity"]
+        return humidity
 
     def getTemperature():
-        pass
+        json = getJSON()
+        data = json["currently"]["data"]
+        visibility = data["temperature"]
+        return temperature
 
-    def apiCall():
-        pass
 
 
 class User:
