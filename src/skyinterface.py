@@ -3,11 +3,13 @@ import astropy.coordinates
 from astropy.coordinates import EarthLocation
 import os
 import requests
+import json
 
 class Astronomer:
     #astropy.coordinates.AltAz()
-    def __init__(self,location):
-        self.location = location
+    def __init__(self,latitude,longitude):
+        self.latitude = latitude
+        self.longitude = longitude
 
     def getTime(self):
         return time
@@ -38,73 +40,72 @@ class Astronomer:
 class ClearDarkSky:
     #Cache data for the past hour.
     ##api limits to 1000 api calls.
-    def __init__(self,location):
-        self.location = location
+    def __init__(self,latitude,longitude):
+        self.latitude = latitude
+        self.longitude = longitude
         self.api_key = os.getenv("DARK_SKY_API_KEY",'')
         self.url = "https://api.darksky.net/forecast/"
         self.cachedJSON = ""#not necessary until we need to reduce processing time, or api calls.
 
     def getJSON(self):
-        url = self.url+self.api_key+"/"+self.location.latitude()+","+self.location.longitude()
+        print "getURL"
+        url = self.url+self.api_key+"/"+str(self.latitude)+","+str(self.longitude)
+        #print url
         r = requests.get(url)
-        print r
+        #print r.text
+        return json.loads(r.text)
 
-    def getCloudCover():
+    def getCloudCover(self):
         ##caching attempt, but now ignore this.
-        json = getJSON()
-        data = json["currently"]["data"]
+        json = self.getJSON()
+        data = json["currently"]
         cloud_cover = data["cloudCover"]
         return cloud_cover
 
-    def getTransparency():
-        json = getJSON()
-        data = json["currently"]["data"]
+    def getTransparency(self):
+        json = self.getJSON()
+        data = json["currently"]
         transparency = data["transparency"]
         return transparency
 
-    def getVisibility():
-        json = getJSON()
-        data = json["currently"]["data"]
+    '''def getVisibility(self):
+        json = self.getJSON()
+        data = json["currently"]
         visibility = data["visibility"]
-        return visibility
+        return visibility'''
 
-    def getDarkness():
+    def getDarkness(self):
         ##
         pass
 
-    def getWind():
-        json = getJSON()
-        data = json["currently"]["data"]
+    def getWind(self):
+        json = self.getJSON()
+        data = json["currently"]
         wind_speed = data["windSpeed"]
         return wind_speed
 
-    def getHumidity():
-        json = getJSON()
-        data = json["currently"]["data"]
+    def getHumidity(self):
+        json = self.getJSON()
+        data = json["currently"]
         humidity = data["humidity"]
         return humidity
 
-    def getTemperature():
-        json = getJSON()
-        data = json["currently"]["data"]
+    def getTemperature(self):
+        json = self.getJSON()
+        data = json["currently"]
         visibility = data["temperature"]
         return temperature
 
 
 
 class User:
-    def __init__(self,longitude,latitude):
+    def __init__(self,latitude,longitude):
         self.latitude = latitude
         self.longitude = longitude
 
-        earthloc = EarthLocation(longitude,latitude,20)
-        print earthloc
-        self.location = earthloc.from_geodetic(longitude,latitude,20)
-        print "latitude:",self.location.latitude
-        print "longitude:",self.location.longitude
 
-        self.clear_dark_sky = ClearDarkSky(self.location)
-        self.astronomer = Astronomer(self.location)
+        self.clear_dark_sky = ClearDarkSky(self.latitude,self.longitude)
+        self.astronomer = Astronomer(self.latitude,self.longitude)
 
     ##wrapper classes called by ALEXA
     #weather classes
